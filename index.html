@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="./image/favicon.png" type="image/x-icon">
+  <title>백제문화제</title>
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+    ul,ol,li{
+      list-style:none;
+    }
+    a{
+      color:#000;
+      text-decoration:none;
+    }
+    img{
+      vertical-align:bottom;
+    }
+
+    .wrap{
+      width:360px;
+      margin:0 auto;
+      overflow:hidden;
+    }
+    .header{
+      position:fixed;
+      top:0;
+      width:360px;
+      padding:16px;
+      height:80px;
+      background-color:#111;      
+    }
+    .header .row{
+      display:flex;
+      flex-flow:row nowrap;
+      justify-content: space-between;
+      align-items:center;
+    }
+    .image{
+      padding-top:80px;
+    }
+    .active{
+      left:0;
+      right:0;
+    }
+    h1 a{
+      display:block;
+      width:126px;
+      height:48px;
+      text-indent:-5000px;
+      background-image:url('./image/logo.png');
+      background-size:contain;
+    }
+    .btn-gp{
+      display:flex;
+      flex-flow:row nowrap;
+      justify-content:flex-end;
+    }
+    .ico-search{
+      width:25px;
+      height:25px;
+      margin-right:16px;
+      background-image:url('./image/search.png');
+      background-size:cover;
+      text-indent:-5000px;
+      cursor: pointer;
+    }
+    .ico-btn-nav{
+      width:28px;
+      height:23px;
+      background-image:url('./image/menu.png');
+      background-size:cover;
+      text-indent:-5000px;
+      cursor: pointer;
+    }
+    .search{
+      padding:20px;
+      background-color:rgba(0,0,0,0.8);
+      position:fixed;
+      left:0;
+      right:0;
+      top:0;
+      bottom:0;
+      display:flex;
+      flex-flow:column nowrap; 
+      display:none;        
+    }
+    .btn-close-search{
+      margin:20px 20px 200px;;
+      text-align:right;
+    }
+    .btn-close-search button{
+      width:50px;
+      height:50px;
+      border-radius: 50%;
+      border:none;
+      background-color:#fcb51d;
+      position:relative;
+      text-indent:-5000px;;
+    }
+    .btn-close-search button::before,
+    .btn-close-search button::after{
+      content:'';
+      display:block;
+      width:32px;
+      height:2px;
+      background-color:#333;
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%) rotate(45deg);
+    }
+    .btn-close-search button::after{
+      width:2px;
+      height:32px;
+    }
+    .search h2{
+      font-size:30px;
+      color:#fff;
+      text-align:center;
+      margin-bottom:20px;
+    }
+    .search input{
+      width:100%;
+      border:6px solid #fcb51d;
+      padding:20px 50px 18px 20px;
+      background-color:transparent;
+      font-size:26px;
+      color:#fff;
+      background:url(./image/search.png) no-repeat 260px center;
+    }
+    nav{
+      position:fixed;
+      left:100%;
+      right:-100%;
+      top:0;
+      bottom:0;      
+      background-color:rgba(0,0,0,0.8);
+      display:flex;
+      flex-flow: row nowrap;
+      justify-content: flex-end;
+      transition:0.3s;
+    }
+    .nav-wrap{
+      width:80%;
+      height:100%;
+      background-color:#fff;
+    }
+    .nav-header{
+      padding:14px 10px;
+      background-color:#494949;
+      display:flex;
+      flex-flow:row nowrap;
+      justify-content: space-between;
+    }
+    .btn-close-nav{
+      width:22px;
+      height:22px;
+      cursor: pointer;
+      position:relative;
+    }
+    .btn-close-nav:before,
+    .btn-close-nav:after{
+      content:'';
+      display:block;
+      width:22px;
+      height:2px;
+      border-radius:1px;
+      background-color:#fff;
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%) rotate(45deg);
+    }
+    .btn-close-nav:after{
+      width:2px;
+      height:22px;
+    }
+    .main-nav{
+      padding:20px;
+    }
+    .main-nav>li{
+      border-bottom:1px solid #ddd;
+      padding:20px 0;
+      font-weight:900;
+      font-size:22px;
+      cursor: pointer;
+    }
+    .main-nav>li:hover{
+      color:#532300;
+    }
+    .sub-nav{
+      background-color:#f6f6f6;
+      display:none;
+    }
+    .sub-nav li{
+      padding:20px;
+      font-weight:400;
+      font-size:16px;
+      color:#333;
+    }
+  </style>
+</head>
+<body>
+  <section class="wrap">
+    <header class="header">
+      <div class="row">
+        <h1><a href="#">백제문화제</a></h1>
+        <ul class="btn-gp">
+          <li class="ico-search" id="btn-search">검색</li>
+          <li class="ico-btn-nav" id="btn-nav">네비버튼</li>
+        </ul>
+      </div>
+      <div class="search">
+        <div class="btn-close-search" id="btn-search-close">
+          <button>닫기</button>
+        </div>
+        <h2>백제 문화제 통합검색</h2>
+        <input type="text" placeholder="무엇을 찾으세요?">
+      </div>
+      <nav>
+        <div class="nav-wrap">
+          <div class="nav-header">
+            <a href="#"><img src="./image/home.png" alt="홈으로" title="홈으로"></a>
+            <div class="btn-close-nav" id="btn-close-nav">
+            </div>
+          </div>
+          <ul class="main-nav">
+            <li>
+              백제문화제 안내
+              <ul class="sub-nav">
+                <li>소개</li>
+                <li>상징물</li>
+                <li>후원안내</li>
+              </ul>
+            </li>
+            <li>
+              축제정보
+              <ul class="sub-nav">
+                <li>행사일정표</li>
+                <li>행사내용</li>
+                <li>입장권/유료정보</li>
+                <li>행사장 오시는 길</li>
+              </ul>
+            </li>
+            <li>
+              기록관
+              <ul class="sub-nav">
+                <li>사진기록</li>
+                <li>영상기록</li>
+                <li>발간물기록</li>
+                <li>프로그램기록</li>
+                <li>축제후기</li>
+              </ul>
+            </li>
+            <li>
+              관광정보
+              <ul class="sub-nav">
+                <li>주요 관광지</li>
+                <li>음식</li>
+                <li>숙박</li>
+                <li>쇼핑</li>
+                <li>문화알림마당</li>
+                <li>추천코스</li>
+              </ul>
+            </li>          
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <section>
+      <div class="image">
+        <img src="./image/baekje.jpg" alt="전체이미지">
+      </div>
+    </section>
+  </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script>
+    $('#btn-search').click(function(){
+      $('.search').show();
+    })
+    $('#btn-search-close').click(function(){
+      $('.search').hide();
+    })
+    $('#btn-nav').click(function(){
+      $('nav').addClass('active');
+    })
+    $('#btn-close-nav').click(function(){
+      $('nav').removeClass('active');
+      $('.main-nav>li>.sub-nav').hide();
+    })
+    $('.main-nav>li').click(function(){
+      $(this).children('.sub-nav').slideDown(200);
+      $('.main-nav>li').not(this).children('.sub-nav').slideUp(200);
+    })
+  </script>
+</body>
+</html>
